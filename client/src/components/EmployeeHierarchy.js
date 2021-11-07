@@ -1,5 +1,6 @@
 import OrganizationChart from "@dabeng/react-orgchart";
 import CustomNode from "./CustomNode.js";
+import "../styles/EmployeeHierarchy.css";
 
 const EmployeeHierarchy = () => {
   const employeeData = {
