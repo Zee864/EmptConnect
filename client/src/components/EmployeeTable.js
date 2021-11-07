@@ -1,14 +1,9 @@
-import { useState, useEffect } from "react";
 import MaterialTable from "material-table";
-import getEmployees from "../utils/getEmployees";
 import employeeData from "./data.json";
-
-const getData = async () => {
-  return await getEmployees();
-};
+import "../styles/EmployeeTable.css";
 
 const EmployeeTable = () => {
-  const [columns, setColumns] = useState([
+  const columns = [
     { title: "Name", field: "name" },
     {
       title: "Surname",
@@ -30,20 +25,13 @@ const EmployeeTable = () => {
       title: "Role",
       field: "role",
     },
-  ]);
-
-  const [data, setData] = useState(employeeData);
+  ];
+  const data = employeeData;
 
   return (
-    <div
-      style={{
-        marginRight: "22%",
-        width: "78%",
-        float: "right",
-        marginTop: "2%",
-      }}
-    >
+    <div className="table-container">
       <MaterialTable
+        style={{ backgroundColor: "rgba(232, 232, 232, 1)", color: "black" }}
         title="Employees"
         columns={columns}
         data={data}
@@ -60,10 +48,20 @@ const EmployeeTable = () => {
                 resolve();
               }, 1000);
             }),
+          onRowAdd: (oldData) =>
+            new Promise((resolve, reject) => {
+              setTimeout(() => {
+                resolve();
+              }, 1000);
+            }),
         }}
         options={{
           exportButton: true,
           filtering: true,
+          headerStyle: {
+            backgroundColor: "rgba(232, 232, 232, 1)",
+            color: "black",
+          },
         }}
       />
     </div>

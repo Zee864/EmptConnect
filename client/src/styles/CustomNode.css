@@ -1,0 +1,19 @@
+#profile-container {
+  font-family: sans-serif;
+  text-align: center;
+}
+
+#employee-card {
+  background-color: rgba(232, 232, 232, 1);
+}
+
+/* For the lines connecting the nodes */
+.orgchart.myChart > ul > li > ul li::before {
+  border-top-color: #215a88;
+}
+
+/* For the lines connecting the nodes */
+.orgchart.myChart > ul > li > ul li .oc-node::before,
+.orgchart.myChart ul li .oc-node:not(:only-child)::after {
+  background-color: #215a88;
+}
