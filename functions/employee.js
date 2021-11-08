@@ -18,6 +18,7 @@ const months = [
 ];
 
 class Employee {
+  //Holds the list of employees containing thier details
   _employees = defaultEmployeeData;
 
   get employees() {
@@ -28,9 +29,16 @@ class Employee {
     this._employees = newEmployees;
   }
 
+  // filterCondition is the optional parameter sent with sortBy
+  // it can be either name, surname, employee_number, birth_date, salary or reporting_line
+  // filterArguments are any parameters sent with the filterCondition
+  // e.g., the date that needs to be filtered along with the birth_date filterCondition
   filter(filterCondition, filterArguments) {
     let sortedEmployeeObject = {};
     if (filterCondition === "reporting_line") {
+      // logic of the algorithm:
+      // get each employee's reporting line number which corrosponds to the employee number
+      // Thus for each employee they can have 0,1 or more children
       this.employees.map((employee) => {
         if (employee.reporting_line === "none")
           sortedEmployeeObject[employee.employeeNumber] = [employee];
@@ -42,6 +50,10 @@ class Employee {
       sortedEmployeeObject = salaryData;
     } else if (filterCondition === "birth_date") {
       if (filterArguments) {
+        // logic of the algorithm:
+        // for each employee, get thier birth date and compare against the one sent as a parameter
+        // depending on the tense parameter which can be either before or after, the date is filtered
+        // for either before the entered date or after
         if (filterArguments.date_of_birth) {
           const filterDate = new Date(
             Date.parse(filterArguments.date_of_birth)
@@ -68,6 +80,9 @@ class Employee {
   }
 }
 
+// Singleton pattern used to ensure that all the employee data is fetched once from the database
+// and any CRUD operations happen in memory as well as mimicked on the remote database.
+// This is to save resources such as cost and time
 class Singleton {
   constructor() {
     if (!Singleton.instance) {
