@@ -8,6 +8,7 @@ import getEmployeeData from "../utils/getEmployeeData";
 import DateFilter from "./DateFilter";
 import "../styles/EmployeeTable.css";
 import FilterByDateToggle from "./FilterByDateToggle";
+import ResetToggle from "./ResetToggle";
 
 const useStyles = makeStyles({
   errorAlert: {
@@ -90,6 +91,7 @@ const EmployeeTable = () => {
               </Snackbar>
             </Stack>
           )}
+          <ResetToggle setEmployeeTableData={setEmployeeTableData} />
           <FilterByDateToggle open={open} setOpen={setOpen} />
           {open && (
             <DateFilter

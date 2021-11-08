@@ -54,7 +54,7 @@ class Employee {
           } else {
             sortedEmployeeObject = this._employees.filter((employee) => {
               let checkDate = new Date(employee.birthDate);
-              return checkDate <= filterDate;
+              return checkDate >= filterDate;
             });
           }
         } else
