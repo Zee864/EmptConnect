@@ -68,4 +68,16 @@ class Employee {
   }
 }
 
-module.exports = Employee;
+class Singleton {
+  constructor() {
+    if (!Singleton.instance) {
+      Singleton.instance = new Employee();
+    }
+  }
+
+  getInstance() {
+    return Singleton.instance;
+  }
+}
+
+module.exports = Singleton;

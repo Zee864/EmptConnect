@@ -1,9 +1,8 @@
 const express = require("express");
 const app = express();
 const cors = require("cors");
-const Joi = require("joi");
 const Employees = require("./functions/employee.js");
-const employees = new Employees();
+const employees = new Employees().getInstance();
 
 //Enable cors
 app.use(cors());
@@ -11,15 +10,7 @@ app.use(cors());
 //Use middleware for request processing pipeline
 app.use(express.json());
 
-// app.get('api/employees', (req, res) => {
-//     // const schema = {
-//     //     name: Joi.string().min(3).required()
-//     // };
-
-//     // const result = Joi.validate(req.body, schema);
-// });
-
-app.get("/", (req, res) => res.send(`Welcome`));
+app.get("/", (req, res) => res.send(`Welcome to EmptConnect`));
 
 //Return the list of employees
 app.get("/api/employees", (req, res) => {
