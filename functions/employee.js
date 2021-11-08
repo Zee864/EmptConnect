@@ -1,5 +1,7 @@
-const salaryData = require("./data.json");
+const salaryData = require("./filteredSalaryData.json");
+const defaultEmployeeData = require("./data.json");
 
+// Used for getting the month name based on the number e.g., 12 = Decemeber
 const months = [
   "January",
   "February",
@@ -16,47 +18,17 @@ const months = [
 ];
 
 class Employee {
-  _employees = [
-    {
-      name: "john",
-      surname: "smith",
-      birthDate: `${new Date(1980, 11, 18).getDate()} ${
-        months[new Date(1980, 11, 18).getMonth()]
-      } ${new Date(1980, 11, 18).getFullYear()}`,
-      employeeNumber: 1,
-      salary: 700000.0,
-      role: "manager",
-      reporting_line: "none",
-    },
-    {
-      name: "jane",
-      surname: "doe",
-      birthDate: `${new Date(1995, 01, 31).getDay()} ${
-        months[new Date(1995, 01, 31).getMonth()]
-      } ${new Date(1995, 01, 31).getFullYear()}`,
-      employeeNumber: 2,
-      salary: 150000.0,
-      role: "employee",
-      reporting_line: 4,
-    },
-    {
-      name: "jane",
-      surname: "doe",
-      birthDate: `${new Date(1995, 01, 31).getDay()} ${
-        months[new Date(1995, 01, 31).getMonth()]
-      } ${new Date(1995, 01, 31).getFullYear()}`,
-      employeeNumber: 3,
-      salary: 150000.0,
-      role: "employee",
-      reporting_line: 1,
-    },
-  ];
+  _employees = defaultEmployeeData;
 
   get employees() {
     return this._employees;
   }
 
-  filter(filterCondition) {
+  set employees(newEmployees) {
+    this._employees = newEmployees;
+  }
+
+  filter(filterCondition, filterArguments) {
     let sortedEmployeeObject = {};
     if (filterCondition === "reporting_line") {
       this.employees.map((employee) => {
@@ -66,8 +38,32 @@ class Employee {
           sortedEmployeeObject[employee.reporting_line].push(employee);
         } else sortedEmployeeObject[employee.reporting_line] = [employee];
       });
-    } else if (filterCondition === "salary") sortedEmployeeObject = salaryData;
-    else sortedEmployeeObject = this.employees;
+    } else if (filterCondition === "salary") {
+      sortedEmployeeObject = salaryData;
+    } else if (filterCondition === "birth_date") {
+      if (filterArguments) {
+        if (filterArguments.date_of_birth) {
+          const filterDate = new Date(
+            Date.parse(filterArguments.date_of_birth)
+          );
+          if (filterArguments.tense === "before") {
+            sortedEmployeeObject = this._employees.filter((employee) => {
+              const checkDate = new Date(employee.birthDate);
+              return checkDate <= filterDate;
+            });
+            console.log(sortedEmployeeObject);
+          } else {
+            sortedEmployeeObject = this._employees.filter((employee) => {
+              let checkDate = new Date(employee.birthDate);
+              return checkDate <= filterDate;
+            });
+          }
+        } else
+          return Promise.reject(`Date of birth missing in filter parameters`);
+      } else return Promise.reject(`Filter arguments missing`);
+    } else {
+      sortedEmployeeObject = defaultEmployeeData;
+    }
 
     return sortedEmployeeObject;
   }

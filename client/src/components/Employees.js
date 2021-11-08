@@ -23,8 +23,13 @@ const Employees = () => {
     <Box id="tab-switcher">
       <Box id="tab-container">
         <Tabs value={value} onChange={handleChange} aria-label="employee-data">
-          <Tab icon={<TableChartIcon />} aria-label="table" />
-          <Tab icon={<AccountTreeIcon />} aria-label="tree" />
+          <Tab
+            icon={<TableChartIcon />}
+            aria-label="table"
+            label="Table View"
+            id="table-tab"
+          />
+          <Tab icon={<AccountTreeIcon />} aria-label="tree" label="Tree View" />
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
