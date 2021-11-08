@@ -20,7 +20,7 @@ const DateFilter = ({ setEmployeeTableData, setError }) => {
 
   return (
     <Form className="mb-5" onSubmit={filterByDate} method="POST">
-      <Form.Group controlId="dateFilter">
+      <Form.Group controlId="dateFilter" className="mb-3">
         <Form.Label>Birth Date</Form.Label>
         <Form.Control required type="date" name="date_of_birth" />
         <Form.Text className="text-muted">
@@ -28,7 +28,7 @@ const DateFilter = ({ setEmployeeTableData, setError }) => {
           after 1970/01/01
         </Form.Text>
       </Form.Group>
-      <div>
+      <div className="mb-2">
         <Form.Check
           required
           inline
