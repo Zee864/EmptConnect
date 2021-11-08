@@ -5,7 +5,8 @@
       "birthDate": "10 January 1980",
       "employeeNumber": "1",
       "salary": "700000.0",
-      "role": "Manager"
+      "role": "Manager",
+      "reporting_line": "None"
     },
     {
       "name": "Jane",
@@ -13,7 +14,8 @@
       "birthDate": "15 December 1969",
       "employeeNumber": "32",
       "salary": "350000.0",
-      "role": "Employee"
+      "role": "Employee",
+      "reporting_line": "Jane Doe"
     },
     {
       "name": "Stephanie",
@@ -21,7 +23,8 @@
       "birthDate": "18 February 1997",
       "employeeNumber": "15",
       "salary": "350000.0",
-      "role": "Employee"
+      "role": "Employee",
+      "reporting_line": "Jane Doe"
     },
     {
       "name": "Jane",
@@ -29,7 +32,8 @@
       "birthDate": "18 February 1997",
       "employeeNumber": "2",
       "salary": "500000.0",
-      "role": "Manager"
+      "role": "Manager",
+      "reporting_line": "John Smith"
     },
     {
       "name": "Brent",
@@ -37,7 +41,8 @@
       "birthDate": "8 August 1955",
       "employeeNumber": "19",
       "salary": "150000.0",
-      "role": "Trainee"
+      "role": "Trainee",
+      "reporting_line": "Stephanie Doe"
     },
     {
       "name": "Christopher",
@@ -45,7 +50,8 @@
       "birthDate": "3 September 1986",
       "employeeNumber": "44",
       "salary": "100000.0",
-      "role": "Trainee"
+      "role": "Trainee",
+      "reporting_line": "Jane Lowry"
     },
     {
       "name": "Frederick",
@@ -53,6 +59,7 @@
       "birthDate": "28 December 1985",
       "employeeNumber": "97",
       "salary": "90000.0",
-      "role": "Trainee"
+      "role": "Trainee",
+      "reporting_line": "Stephanie Doe"
     }
 ]

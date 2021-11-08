@@ -42,6 +42,10 @@ const EmployeeTable = () => {
       title: "Role",
       field: "role",
     },
+    {
+      title: "Reporting Line",
+      field: "reporting_line",
+    },
   ];
   const [employeeTableData, setEmployeeTableData] = useState({});
   const [error, setError] = useState(false);
