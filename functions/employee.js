@@ -1,3 +1,5 @@
+const salaryData = require("./data.json");
+
 const months = [
   "January",
   "February",
@@ -64,7 +66,8 @@ class Employee {
           sortedEmployeeObject[employee.reporting_line].push(employee);
         } else sortedEmployeeObject[employee.reporting_line] = [employee];
       });
-    } else sortedEmployeeObject = this.employees;
+    } else if (filterCondition === "salary") sortedEmployeeObject = salaryData;
+    else sortedEmployeeObject = this.employees;
 
     return sortedEmployeeObject;
   }

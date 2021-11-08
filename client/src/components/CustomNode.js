@@ -14,19 +14,24 @@ const CustomNode = ({ nodeData }) => {
           <Typography className={"MuiTypography--heading mb-3"} variant={"h5"}>
             {nodeData.title
               ? nodeData.title
-              : `${nodeData.role} - ${nodeData.name} ${nodeData.surname}`}
+              : nodeData.role &&
+                nodeData.name &&
+                nodeData.surname &&
+                `${nodeData.role} - ${nodeData.name} ${nodeData.surname}`}
           </Typography>
           <Typography
             className={"MuiTypography--subheading"}
             variant={"caption"}
           >
-            {!nodeData.title && <p>D.O.B - {nodeData.birthDate}</p>}
+            {!nodeData.title && nodeData.birthDate && (
+              <p>D.O.B - {nodeData.birthDate}</p>
+            )}
           </Typography>
           <Typography
             className={"MuiTypography--subheading"}
             variant={"caption"}
           >
-            {!nodeData.title && (
+            {!nodeData.title && nodeData.employeeNumber && (
               <p>Employee Number - {nodeData.employeeNumber}</p>
             )}
           </Typography>
@@ -34,7 +39,7 @@ const CustomNode = ({ nodeData }) => {
             className={"MuiTypography--subheading"}
             variant={"caption"}
           >
-            {!nodeData.title && (
+            {!nodeData.title && nodeData.salary && (
               <p>
                 Salary - ZAR
                 {nodeData.salary

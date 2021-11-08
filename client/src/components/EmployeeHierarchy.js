@@ -1,47 +1,27 @@
+import { useState, useEffect } from "react";
+import axios from "axios";
 import OrganizationChart from "@dabeng/react-orgchart";
 import CustomNode from "./CustomNode.js";
 import "../styles/EmployeeHierarchy.css";
 
 const EmployeeHierarchy = () => {
-  const employeeData = {
-    title: "EmptConnect",
-    children: [
-      {
-        name: "John",
-        surname: "Smith",
-        birthDate: "10 January 1980",
-        employeeNumber: 1,
-        salary: 700000.0,
-        role: "Manager",
-        children: [
-          {
-            name: "Jane",
-            surname: "Doe",
-            birthDate: "18 February 1997",
-            employeeNumber: 2,
-            salary: 150000.0,
-            role: "Employee",
-          },
-        ],
-      },
-      {
-        name: "John",
-        surname: "Smith",
-        birthDate: "10 January 1980",
-        employeeNumber: 1,
-        salary: 700000.0,
-        role: "Manager",
-      },
-      {
-        name: "John",
-        surname: "Smith",
-        birthDate: "10 January 1980",
-        employeeNumber: 1,
-        salary: 700000.0,
-        role: "Manager",
-      },
-    ],
-  };
+  const [employeeData, setEmployeeData] = useState({});
+
+  useEffect(() => {
+    const getEmployeeData = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:8000/api/employees?sortBy=salary"
+        );
+        setEmployeeData(res.data);
+      } catch (error) {
+        console.log(
+          `An error occured while getting the employee data: ${error}`
+        );
+      }
+    };
+    getEmployeeData();
+  }, []);
 
   return (
     <OrganizationChart
