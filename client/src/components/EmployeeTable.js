@@ -7,6 +7,7 @@ import Snackbar from "@mui/material/Snackbar";
 import getEmployeeData from "../utils/getEmployeeData";
 import DateFilter from "./DateFilter";
 import "../styles/EmployeeTable.css";
+import FilterByDateToggle from "./FilterByDateToggle";
 
 const useStyles = makeStyles({
   errorAlert: {
@@ -43,6 +44,7 @@ const EmployeeTable = () => {
   ];
   const [employeeTableData, setEmployeeTableData] = useState({});
   const [error, setError] = useState(false);
+  const [open, setOpen] = useState(false);
   const classes = useStyles();
 
   useEffect(() => {
@@ -88,10 +90,13 @@ const EmployeeTable = () => {
               </Snackbar>
             </Stack>
           )}
-          <DateFilter
-            setEmployeeTableData={setEmployeeTableData}
-            setError={setError}
-          />
+          <FilterByDateToggle open={open} setOpen={setOpen} />
+          {open && (
+            <DateFilter
+              setEmployeeTableData={setEmployeeTableData}
+              setError={setError}
+            />
+          )}
           <MaterialTable
             style={{
               backgroundColor: "rgba(232, 232, 232, 1)",
