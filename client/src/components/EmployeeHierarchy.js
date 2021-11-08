@@ -1,35 +1,36 @@
 import { useState, useEffect } from "react";
-import getEmployees from "../utils/getEmployees";
+import OrganizationChart from "@dabeng/react-orgchart";
+import CustomNode from "./CustomNode.js";
+import getEmployeeData from "../utils/getEmployeeData.js";
+import "../styles/EmployeeHierarchy.css";
 
 const EmployeeHierarchy = () => {
-  const [employees, setEmployees] = useState([]);
+  const [employeeHierarchyData, setEmployeeData] = useState({});
 
   useEffect(() => {
-    const fetchData = async () => {
-      setEmployees(await getEmployees());
-    };
-
-    fetchData();
+    getEmployeeData("http://localhost:8000/api/employees?sortBy=salary")
+      .then((data) => {
+        setEmployeeData(data);
+      })
+      .catch((error) => {
+        console.log(`An error occured while getting the data: ${error}`);
+      });
   }, []);
 
-  const employeeCard = () => {
-    const keys = Object.keys(employees);
-    const values = Object.values(employees);
-
-    return (
-      <>
-        {/* {keys.map((key) => {
-                    console.log(employees[key])
-                })} */}
-      </>
-    );
-  };
-
   return (
-    <div className="org-tree">
-      Employee Chart
-      {employeeCard()}
-    </div>
+    <>
+      {employeeHierarchyData &&
+      Object.keys(employeeHierarchyData).length !== 0 &&
+      Object.getPrototypeOf(employeeHierarchyData) !== Object.prototype ? (
+        <></>
+      ) : (
+        <OrganizationChart
+          datasource={employeeHierarchyData}
+          chartClass="myChart"
+          NodeTemplate={CustomNode}
+        />
+      )}
+    </>
   );
 };
 
