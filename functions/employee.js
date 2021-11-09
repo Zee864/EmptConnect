@@ -1,3 +1,4 @@
+const fs = require("fs");
 const salaryData = require("./filteredSalaryData.json");
 const defaultEmployeeData = require("./data.json");
 
@@ -20,13 +21,77 @@ const months = [
 class Employee {
   //Holds the list of employees containing thier details
   _employees = defaultEmployeeData;
-
   get employees() {
     return this._employees;
   }
 
-  set employees(newEmployees) {
-    this._employees = newEmployees;
+  add(newData) {
+    if (newData) {
+      try {
+        // add the new data to the existing employees array
+        this._employees = [...this._employees, newData];
+
+        //write the new data to the file
+        const success = this.writeToFile(
+          "./functions/data.json",
+          JSON.stringify(this._employees)
+        );
+        if (success === true) return true;
+        return success;
+      } catch (error) {
+        return error;
+      }
+    } else return `Invalid or null parameters defined`;
+  }
+
+  update(newData) {
+    if (newData) {
+      // loop through the array to find the object nad overwrite it
+      this._employees.forEach((object, index) => {
+        if (object.employeeNumber === newData.employeeNumber) {
+          this._employees[index] = newData;
+          return true;
+        }
+      });
+
+      // write the updated data to the file
+      const success = this.writeToFile(
+        "./functions/data.json",
+        JSON.stringify(this._employees)
+      );
+      if (success === true) return true;
+      return success;
+    }
+  }
+
+  delete(objectToDelete) {
+    if (objectToDelete) {
+      // loop through the array to find the object and get the index
+      this._employees.forEach((object, index) => {
+        if (object.name === objectToDelete.name) {
+          this._employees.splice(index);
+          return true;
+        }
+      });
+
+      // write the updated data to the file
+      const success = this.writeToFile(
+        "./functions/data.json",
+        JSON.stringify(this._employees)
+      );
+      if (success === true) return true;
+      return success;
+    } else return `Parameters are not defined`;
+  }
+
+  writeToFile(filename, data) {
+    try {
+      fs.writeFile(filename, data, (err) => {
+        if (err) return err;
+      });
+    } catch (error) {
+      return error;
+    }
   }
 
   // filterCondition is the optional parameter sent with sortBy
