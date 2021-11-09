@@ -8,10 +8,10 @@ const App = () => {
   return (
     <Router>
       <Switch>
-        <section className="header">
+        <>
           <Sidebar />
           <Route exact path="/" component={Employees}></Route>
-        </section>
+        </>
       </Switch>
     </Router>
   );
