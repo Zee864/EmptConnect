@@ -1,0 +1,10 @@
+.table-container {
+  margin-right: 22%;
+  width: 78%;
+  float: right;
+  margin-top: 2%;
+}
+textarea {
+  border: none !important;
+  outline: none !important;
+}

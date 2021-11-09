@@ -1,0 +1,65 @@
+[
+    {
+      "name": "John",
+      "surname": "Smith",
+      "birthDate": "10 January 1980",
+      "employeeNumber": "1",
+      "salary": "700000.0",
+      "role": "Manager",
+      "reporting_line": "None"
+    },
+    {
+      "name": "Jane",
+      "surname": "Lowry",
+      "birthDate": "15 December 1969",
+      "employeeNumber": "32",
+      "salary": "350000.0",
+      "role": "Employee",
+      "reporting_line": "Jane Doe"
+    },
+    {
+      "name": "Stephanie",
+      "surname": "Doe",
+      "birthDate": "18 February 1997",
+      "employeeNumber": "15",
+      "salary": "350000.0",
+      "role": "Employee",
+      "reporting_line": "Jane Doe"
+    },
+    {
+      "name": "Jane",
+      "surname": "Doe",
+      "birthDate": "18 February 1997",
+      "employeeNumber": "2",
+      "salary": "500000.0",
+      "role": "Manager",
+      "reporting_line": "John Smith"
+    },
+    {
+      "name": "Brent",
+      "surname": "Avila",
+      "birthDate": "8 August 1955",
+      "employeeNumber": "19",
+      "salary": "150000.0",
+      "role": "Trainee",
+      "reporting_line": "Stephanie Doe"
+    },
+    {
+      "name": "Christopher",
+      "surname": "Brown",
+      "birthDate": "3 September 1986",
+      "employeeNumber": "44",
+      "salary": "100000.0",
+      "role": "Trainee",
+      "reporting_line": "Jane Lowry"
+    },
+    {
+      "name": "Frederick",
+      "surname": "Royal",
+      "birthDate": "28 December 1985",
+      "employeeNumber": "97",
+      "salary": "90000.0",
+      "role": "Trainee",
+      "reporting_line": "Stephanie Doe"
+    }
+]
