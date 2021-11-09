@@ -126,21 +126,21 @@ class Employee {
         reporting_line: objectToDelete.reporting_line,
       };
 
-      // loop through the array to find the object and get the index
+      //loop through the array to find the object and get the index
       this._employees.forEach((object, index) => {
         if (object.name === deleteObject.name) {
-          this._employees.splice(index);
+          this._employees.splice(index, 1);
           return true;
         }
       });
 
       // write the updated data to the file
-      const success = this.writeToFile(
+      this.writeToFile(
         "./functions/data.json",
         JSON.stringify(this._employees)
       );
-      if (success === true) return true;
-      return success;
+
+      return this._employees;
     } else return `Parameters are not defined`;
   }
 

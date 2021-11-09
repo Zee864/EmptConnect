@@ -148,7 +148,7 @@ const EmployeeTable = () => {
             }}
             title="Employees"
             columns={columns}
-            data={employeeTableData}
+            data={employeeTableData ? employeeTableData : []}
             editable={{
               onRowUpdate: (newData, oldData) =>
                 new Promise((resolve, reject) => {
@@ -171,19 +171,12 @@ const EmployeeTable = () => {
               onRowDelete: (oldData) =>
                 new Promise((resolve, reject) => {
                   setTimeout(async () => {
-                    const dataDelete = [...employeeTableData];
-                    dataDelete.forEach((object, index) => {
-                      if (object.employeeNumber === oldData.employeeNumber) {
-                        dataDelete.splice(index);
-                        return true;
-                      }
-                    });
-
-                    setEmployeeTableData([...dataDelete]);
                     await deleteEmployeeData(
                       "http://localhost:8000/api/employees",
                       { deleteObject: oldData }
-                    );
+                    ).then((res) => {
+                      setEmployeeTableData(res);
+                    });
                     resolve();
                   }, 1000);
                 }),

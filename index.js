@@ -55,8 +55,7 @@ app.delete("/api/employees", (req, res) => {
     return res.status(400).json("Invalid or null parameters");
   else {
     try {
-      employees.delete(req.body.deleteObject);
-      return res.status(200).json("Successfully deleted entry");
+      return res.status(200).json(employees.delete(req.body.deleteObject));
     } catch (error) {
       return res.status(500).json(error);
     }
