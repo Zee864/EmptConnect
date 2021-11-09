@@ -1,22 +1,6 @@
 const fs = require("fs");
 const defaultEmployeeData = require("./data.json");
 
-// Used for getting the month name based on the number e.g., 12 = Decemeber
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
-
 class Employee {
   //Holds the list of employees containing thier details
   _employees = defaultEmployeeData;
