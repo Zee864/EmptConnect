@@ -24,7 +24,10 @@ const CustomNode = ({ nodeData }) => {
             variant={"caption"}
           >
             {!nodeData.title && nodeData.birthDate && (
-              <p>D.O.B - {nodeData.birthDate}</p>
+              <p>
+                D.O.B -{" "}
+                {new Date(Date.parse(nodeData.birthDate)).toLocaleDateString()}
+              </p>
             )}
           </Typography>
           <Typography
