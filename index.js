@@ -24,5 +24,43 @@ app.get("/api/employees", (req, res) => {
   }
 });
 
+app.put("/api/employees", (req, res) => {
+  if (!req.body.updateObject)
+    return res.status(400).json("Invalid or null parameters");
+  else {
+    try {
+      employees.update(req.body.updateObject);
+      return res.status(200).json("Successfully updated entry");
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  }
+});
+
+app.post("/api/employees", (req, res) => {
+  if (!req.body.newObject)
+    return res.status(400).json("Invalid or null parameters");
+  else {
+    try {
+      employees.add(req.body.newObject);
+      return res.status(200).json("Successfully added entry");
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  }
+});
+
+app.delete("/api/employees", (req, res) => {
+  if (!req.body.deleteObject)
+    return res.status(400).json("Invalid or null parameters");
+  else {
+    try {
+      return res.status(200).json(employees.delete(req.body.deleteObject));
+    } catch (error) {
+      return res.status(500).json(error);
+    }
+  }
+});
+
 const port = process.env.PORT || 8000;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

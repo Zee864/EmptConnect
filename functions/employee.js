@@ -1,32 +1,157 @@
-const salaryData = require("./filteredSalaryData.json");
+const fs = require("fs");
 const defaultEmployeeData = require("./data.json");
-
-// Used for getting the month name based on the number e.g., 12 = Decemeber
-const months = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December",
-];
 
 class Employee {
   //Holds the list of employees containing thier details
   _employees = defaultEmployeeData;
-
   get employees() {
     return this._employees;
   }
 
-  set employees(newEmployees) {
-    this._employees = newEmployees;
+  sortBySalary() {
+    // Array to hold the employees sorted by salary
+    let salarySortedEmployees = JSON.parse(JSON.stringify(this._employees));
+    // Array to hold the employees sorted by salary and grouped by role
+    let roleSortedEmployees = [];
+    // Object to write to the filteredSalaryData.json file
+    // This will be used to make the tree
+    let fullySortedEmployees = { title: "EmptConnect", children: [] };
+
+    // Sort by the highest salary
+    roleSortedEmployees = salarySortedEmployees.sort((element1, element2) => {
+      return element1.salary > element2.salary;
+    });
+
+    // Sort by the role with the following hierarchy: Manager > Employee > Trainee
+    roleSortedEmployees = roleSortedEmployees.sort((element1, element2) => {
+      if (element2.role === "Manager" && element1.role !== "Manager") return -1;
+      else if (element2.role === "Employee" && element1.role === "Trainee")
+        return -1;
+    });
+
+    roleSortedEmployees.reverse();
+
+    let tempArray = fullySortedEmployees;
+    let previous = null;
+
+    for (let i = 0; i < roleSortedEmployees.length; i++) {
+      if (tempArray === fullySortedEmployees) {
+        tempArray.children = [];
+        tempArray.children.push(roleSortedEmployees[i]);
+        tempArray = roleSortedEmployees[i];
+        previous = fullySortedEmployees;
+      } else {
+        if (roleSortedEmployees[i].role === tempArray.role) {
+          previous.children[previous.children.length] = roleSortedEmployees[i];
+          tempArray = roleSortedEmployees[i];
+        } else {
+          tempArray.children = [];
+          tempArray.children.push(roleSortedEmployees[i]);
+          previous = tempArray;
+          tempArray = roleSortedEmployees[i];
+        }
+      }
+    }
+
+    return JSON.stringify(fullySortedEmployees);
+  }
+
+  add(newData) {
+    if (newData) {
+      try {
+        // add the new data to the existing employees array
+        const addObject = {
+          name: newData.name,
+          surname: newData.surname,
+          birthDate: newData.birthDate,
+          employeeNumber: newData.employeeNumber,
+          salary: newData.salary,
+          role: newData.role,
+          reporting_line: newData.reporting_line,
+        };
+        this._employees = [...this._employees, addObject];
+
+        //write the new data to the file
+        const success = this.writeToFile(
+          "./functions/data.json",
+          JSON.stringify(this._employees)
+        );
+        if (success === true) return true;
+        return success;
+      } catch (error) {
+        return error;
+      }
+    } else return `Invalid or null parameters defined`;
+  }
+
+  update(newData) {
+    if (newData) {
+      const updateObject = {
+        name: newData.name,
+        surname: newData.surname,
+        birthDate: newData.birthDate,
+        employeeNumber: newData.employeeNumber,
+        salary: newData.salary,
+        role: newData.role,
+        reporting_line: newData.reporting_line,
+      };
+
+      // loop through the array to find the object nad overwrite it
+      this._employees.forEach((object, index) => {
+        if (object.employeeNumber === updateObject.employeeNumber) {
+          this._employees[index] = updateObject;
+          return true;
+        }
+      });
+
+      // write the updated data to the file
+      const success = this.writeToFile(
+        "./functions/data.json",
+        JSON.stringify(this._employees)
+      );
+      if (success === true) return true;
+      return success;
+    }
+  }
+
+  delete(objectToDelete) {
+    if (objectToDelete) {
+      const deleteObject = {
+        name: objectToDelete.name,
+        surname: objectToDelete.surname,
+        birthDate: objectToDelete.birthDate,
+        employeeNumber: objectToDelete.employeeNumber,
+        salary: objectToDelete.salary,
+        role: objectToDelete.role,
+        reporting_line: objectToDelete.reporting_line,
+      };
+
+      //loop through the array to find the object and get the index
+      this._employees.forEach((object, index) => {
+        if (object.name === deleteObject.name) {
+          this._employees.splice(index, 1);
+          return true;
+        }
+      });
+
+      // write the updated data to the file
+      this.writeToFile(
+        "./functions/data.json",
+        JSON.stringify(this._employees)
+      );
+
+      return this._employees;
+    } else return `Parameters are not defined`;
+  }
+
+  writeToFile(filename, data) {
+    try {
+      fs.writeFile(filename, data, (err) => {
+        if (err) return err;
+      });
+    } catch (error) {
+      return error;
+    }
   }
 
   // filterCondition is the optional parameter sent with sortBy
@@ -47,7 +172,7 @@ class Employee {
         } else sortedEmployeeObject[employee.reporting_line] = [employee];
       });
     } else if (filterCondition === "salary") {
-      sortedEmployeeObject = salaryData;
+      sortedEmployeeObject = this.sortBySalary();
     } else if (filterCondition === "birth_date") {
       if (filterArguments) {
         // logic of the algorithm:
